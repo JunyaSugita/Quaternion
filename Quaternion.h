@@ -1,4 +1,5 @@
 #pragma once
+
 class Quaternion
 {
 public:
@@ -10,6 +11,12 @@ public:
 public:
 	Quaternion();
 	Quaternion(float x, float y, float z, float w);
-	Quaternion Identity();
+	void Identity();
+	void Conjugation();
+	float norm();
+	void unit();
+	void Inverse();
+
+	Quaternion Multiply(Quaternion q1, Quaternion q2);
 };
 
