@@ -10,7 +10,7 @@ const int WIN_WIDTH = 600;
 // ウィンドウ縦幅
 const int WIN_HEIGHT = 400;
 
-void DrawFormatString(float x, float y, Quaternion q);
+void DrawFormatString(float x, float y, Vector3 vec);
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
 	_In_ int nCmdShow) {
@@ -45,15 +45,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	// ゲームループで使う変数の宣言
-	Quaternion q1 = { 2.0f,3.0f,4.0f,1.0f };
-	Quaternion q2 = { 1.0f,3.0f,5.0f,2.0f };
-	Quaternion identity;
-	Quaternion conj;
-	Quaternion inv;
-	Quaternion normal;
-	Quaternion mul1;
-	Quaternion mul2;
-	float norm = 0;
+	Quaternion* qua = new Quaternion();
+	Matrix4* mat4 = new Matrix4();
+
+	Quaternion rotation = qua->MakeAxisAngle({ 3.0f,5.0f,2.0f }, 3.141592f / 2.0f);
+	Vector3 pointY = { 0.0f,1.0f,0.0f };
+	Matrix4 rotateMatrix = qua->MakeRotateMatrix(rotation);
+	Vector3 rotateByQuaternion = qua->RotateVector(pointY, rotation);
+	Vector3 rotateByMatrix = mat4->TransformAffine(pointY, rotateMatrix);
 
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
@@ -77,33 +76,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		identity.Identity();
-		DrawFormatString(0, 0, identity);
-
-		conj = q1;
-		conj.Conjugation();
-		DrawFormatString(0, 20, conj);
-
-		inv = q1;
-		inv.Inverse();
-		DrawFormatString(0, 40, inv);
-
-		normal = unit(q1);
-		DrawFormatString(0, 60, normal);
-
-		mul1 = mul1.Multiply(q1, q2);
-		DrawFormatString(0, 80, mul1);
-
-		mul2 = mul2.Multiply(q2, q1);
-		DrawFormatString(0, 100, mul2);
-
-		norm = q1.norm();
-		DrawFormatString(0, 120, GetColor(255,255,255),"%.2f", norm);
-
+		DrawFormatString(0, 0, rotateByQuaternion);
+		DrawFormatString(0, 20, rotateByMatrix);
 
 		// 描画処理
-		
-
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
@@ -129,6 +105,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	return 0;
 }
 
-void DrawFormatString(float x, float y, Quaternion q) {
-	DrawFormatString(x, y, GetColor(255, 255, 255), "%.2f, %.2f, %.2f, %.2f\n", q.x, q.y, q.z, q.w);
+void DrawFormatString(float x, float y, Vector3 vec) {
+	DrawFormatString(x, y, GetColor(255, 255, 255), "%.2f, %.2f, %.2f\n", vec.x, vec.y, vec.z);
 }
