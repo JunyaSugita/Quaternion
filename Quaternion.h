@@ -11,12 +11,14 @@ public:
 public:
 	Quaternion();
 	Quaternion(float x, float y, float z, float w);
-	void Identity();
-	void Conjugation();
-	float norm();
-	void unit();
-	void Inverse();
-
+	Quaternion Identity();
+	Quaternion Conjugation(Quaternion q);
+	float norm()const;
+	Quaternion& unit();
+	Quaternion Inverse(Quaternion q);
 	Quaternion Multiply(Quaternion q1, Quaternion q2);
+
+	Quaternion& operator/=(Quaternion q);
+	Quaternion& operator/(float f);
 };
 

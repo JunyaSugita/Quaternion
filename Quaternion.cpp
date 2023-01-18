@@ -11,7 +11,7 @@ Quaternion::Quaternion(float x, float y, float z, float w)
 {
 }
 
-void Quaternion::Identity()
+Quaternion Quaternion::Identity()
 {
 	x = 0;
 	y = 0;
@@ -19,47 +19,58 @@ void Quaternion::Identity()
 	w = 1;
 }
 
-void Quaternion::Conjugation()
+Quaternion Quaternion::Conjugation(Quaternion q)
 {
-	x *= -1;
-	y *= -1;
-	z *= -1;
+	q.x *= -1;
+	q.y *= -1;
+	q.z *= -1;
+	return q;
 }
 
-float Quaternion::norm()
+float Quaternion::norm()const
 {
-	float ans;
-	ans = sqrt(w * w + x * x + y * y + z * z);
-
-	return ans;
+	return sqrt(w * w + x * x + y * y + z * z);
 }
 
-void Quaternion::unit()
+Quaternion& Quaternion::unit()
 {
-	float norm;
-	norm = sqrt(w * w + x * x + y * y + z * z);
-
-	w /= norm;
-	x /= norm;
-	y /= norm;
-	z /= norm;
+	float len = norm();
+	if (len != 0) {
+		return *this /= norm();
+	}
+	return *this;
 }
 
-void Quaternion::Inverse()
+Quaternion Quaternion::Inverse(Quaternion q)
 {
-
+	//norm() * norm() / Conjugation(q);
 }
 
 Quaternion Quaternion::Multiply(Quaternion q1, Quaternion q2)
 {
 	Quaternion ans;
 
-	ans.w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
 	ans.x = q1.y * q2.z - q1.z * q2.y + q2.w * q1.x + q2.w * q1.x;
 	ans.y = q1.z * q2.x - q1.x * q2.z + q2.w * q1.y + q2.w * q1.y;
 	ans.z = q1.x * q2.y - q1.y * q2.x + q2.w * q1.z + q2.w * q1.z;
+	ans.w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
 
 	return ans;
+}
+
+Quaternion& Quaternion::operator/=(Quaternion q)
+{
+	return Quaternion();
+}
+
+Quaternion& Quaternion::operator/(float f)
+{
+	x /= f;
+	y /= f;
+	z /= f;
+	w /= f;
+
+	return *this;
 }
 
 

@@ -88,8 +88,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		inv.Inverse();
 		DrawFormatString(0, 40, inv);
 
-		normal = q1;
-		normal.unit();
+		normal = unit(q1);
 		DrawFormatString(0, 60, normal);
 
 		mul1 = mul1.Multiply(q1, q2);
