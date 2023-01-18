@@ -48,7 +48,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Quaternion* qua = new Quaternion();
 	Matrix4* mat4 = new Matrix4();
 
-	Quaternion rotation = qua->MakeAxisAngle({ 3.0f,5.0f,2.0f }, 3.141592f / 2.0f);
+	Quaternion rotation = qua->MakeAxisAngle({ 0.0f,0.0f,1.0f }, 3.141592f / 2.0f);
 	Vector3 pointY = { 0.0f,1.0f,0.0f };
 	Matrix4 rotateMatrix = qua->MakeRotateMatrix(rotation);
 	Vector3 rotateByQuaternion = qua->RotateVector(pointY, rotation);
