@@ -41,14 +41,18 @@ void Matrix4::Initialize()
 	}
 }
 
-Vector3 Matrix4::TransformAffine(const Vector3& vector, const Matrix4& mat4)
+Vector3 Matrix4::TransformAffine(const Vector3& v, const Matrix4& m)
 {
-	Vector3 vec;
-	vec.x = mat4.m[0][0] * vector.x + mat4.m[0][1] * vector.y + mat4.m[0][2] * vector.z + mat4.m[0][3] * 1;
-	vec.y = mat4.m[1][0] * vector.x + mat4.m[1][1] * vector.y + mat4.m[1][2] * vector.z + mat4.m[1][3] * 1;
-	vec.z = mat4.m[2][0] * vector.x + mat4.m[2][1] * vector.y + mat4.m[2][2] * vector.z + mat4.m[2][3] * 1;
+	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
 
-	return vec;
+	Vector3 result
+	{
+		(v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0] * 0.0f) / w,
+		(v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1] * 0.0f) / w,
+		(v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + m.m[3][2] * 0.0f) / w
+	};
+
+	return result;
 }
 
 Matrix4& Matrix4::operator*=(const Matrix4& m2)
