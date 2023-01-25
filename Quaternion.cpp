@@ -99,6 +99,56 @@ Matrix4 Quaternion::MakeRotateMatrix(const Quaternion& q)
 	);
 }
 
+
+float Quaternion::Dot(const Quaternion q1, const Quaternion& q2)
+{
+	float ans;
+
+	ans = q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
+
+	return ans;
+}
+
+Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float t)
+{
+	Quaternion ans;
+	float dot = Dot(q1, q2);
+	Quaternion t2 = q2;
+
+	if (dot < 0.0f) {
+		dot = -dot;
+		t2 = q2 * -1;
+
+	}
+	if (dot >= 1.0f - FLT_EPSILON) {
+		ans = q1 * (1.0f - t) + q2 * t;
+		return ans;
+	}
+
+	float k0 = 1.0f - t;
+	float k1 = t;
+	
+
+	if ((1.0f - dot) > 0.001f) {
+		float theta = (float)acos(dot);
+		k0 = (float)(sin(theta * k0) / sin(theta));
+		k1 = (float)(sin(theta * k1) / sin(theta));
+	}
+	
+	ans = q1 * k0 + t2 * k1;
+	return ans;
+}
+
+Quaternion& Quaternion::operator+=(const Quaternion& q)
+{
+	Quaternion q1 = *this;
+	q1.x += q.x;
+	q1.y += q.y;
+	q1.z += q.z;
+	q1.w += q.w;
+	return q1;
+}
+
 Quaternion& Quaternion::operator*=(const Quaternion& q)
 {
 	Quaternion temp;
@@ -136,6 +186,12 @@ Quaternion& Quaternion::operator/(float f)
 	w /= f;
 
 	return *this;
+}
+
+const Quaternion operator+(const Quaternion& q1, const Quaternion& q2)
+{
+	Quaternion ans = q1;
+	return ans += q2;
 }
 
 const Quaternion operator*(const Quaternion& q1, const Quaternion& q2)
