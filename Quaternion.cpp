@@ -113,16 +113,15 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float t
 {
 	Quaternion ans;
 	float dot = Dot(q1, q2);
+	if (dot >= 1.0f - FLT_EPSILON) {
+		ans = q1 * (1.0f - t) + q2 * t;
+		return ans;
+	}
 	Quaternion t2 = q2;
 
 	if (dot < 0.0f) {
 		dot = -dot;
 		t2 = q2 * -1;
-
-	}
-	if (dot >= 1.0f - FLT_EPSILON) {
-		ans = q1 * (1.0f - t) + q2 * t;
-		return ans;
 	}
 
 	float k0 = 1.0f - t;
