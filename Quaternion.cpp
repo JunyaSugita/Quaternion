@@ -204,3 +204,9 @@ const Quaternion operator*(const Quaternion& q, float f)
 	Quaternion temp(q);
 	return temp *= f;
 }
+
+const Quaternion operator*(float f, const Quaternion& q)
+{
+	float ans(f);
+	return ans * q;
+}

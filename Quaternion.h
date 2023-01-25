@@ -38,3 +38,4 @@ public:
 const Quaternion operator+(const Quaternion& q1, const Quaternion& q2);
 const Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
 const Quaternion operator*(const Quaternion& q, float f);
+const Quaternion operator*(float f, const Quaternion& q);
