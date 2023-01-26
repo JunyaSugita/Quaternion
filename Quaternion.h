@@ -28,7 +28,10 @@ public:
 	float Dot(const Quaternion q1, const Quaternion& q2);
 	Quaternion Slerp(const Quaternion& q0, const Quaternion& q1,float t);
 
+
+	Quaternion operator-()const;
 	Quaternion& operator+=(const Quaternion& q);
+	Quaternion& operator-=(const Quaternion& q);
 	Quaternion& operator*=(const Quaternion& q);
 	Quaternion& operator*=(float f);
 	Quaternion& operator/=(float s);
@@ -36,6 +39,7 @@ public:
 };
 
 const Quaternion operator+(const Quaternion& q1, const Quaternion& q2);
+const Quaternion operator-(const Quaternion& q1, const Quaternion& q2);
 const Quaternion operator*(const Quaternion& q1, const Quaternion& q2);
 const Quaternion operator*(const Quaternion& q, float f);
 const Quaternion operator*(float f, const Quaternion& q);
