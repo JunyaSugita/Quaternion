@@ -48,14 +48,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Quaternion* qua = new Quaternion();
 	Matrix4* mat4 = new Matrix4();
 
-	Quaternion rotation0 = qua->MakeAxisAngle({ 0.71f,0.71f,0.0f }, 0.3f);
-	Quaternion rotation1 = { -rotation0.x,-rotation0.y,-rotation0.z, -rotation0.w };
-
-	Quaternion interpolate0 = qua->Slerp(rotation0, rotation1, 0.0f);
-	Quaternion interpolate1 = qua->Slerp(rotation0, rotation1, 0.3f);
-	Quaternion interpolate2 = qua->Slerp(rotation0, rotation1, 0.5f);
-	Quaternion interpolate3 = qua->Slerp(rotation0, rotation1, 0.7f);
-	Quaternion interpolate4 = qua->Slerp(rotation0, rotation1, 1.0f);
+	Vector3 direction1 = { 1.0f,0.0f,1.0f };
+	Vector3 direction2 = { 1.0f,1.0f,0.0f };
+	Quaternion dirToDir = qua->DirectionToDirection(direction1, direction2);
 
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };
@@ -79,11 +74,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		DrawFormatString(0, 0, interpolate0);
-		DrawFormatString(0, 20, interpolate1);
-		DrawFormatString(0, 40, interpolate2);
-		DrawFormatString(0, 60, interpolate3);
-		DrawFormatString(0, 80, interpolate4);
+		DrawFormatString(0, 0, dirToDir);
 
 		// 描画処理
 

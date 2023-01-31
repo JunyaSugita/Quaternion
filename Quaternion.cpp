@@ -72,10 +72,10 @@ Quaternion Quaternion::MakeAxisAngle(const Vector3& axis, float angle)
 	Quaternion q;
 	Vector3 vec = axis;
 	vec.normalize();
+	q.x = vec.x * sinf(angle / 2);
+	q.y = vec.y * sinf(angle / 2);
+	q.z = vec.z * sinf(angle / 2);
 	q.w = cos(angle / 2);
-	q.x = vec.x * sin(angle / 2);
-	q.y = vec.y * sin(angle / 2);
-	q.z = vec.z * sin(angle / 2);
 
 	return q;
 }
@@ -138,6 +138,24 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float t
 		return ans;
 	}
 	return ans;
+}
+
+Quaternion Quaternion::DirectionToDirection(const Vector3& u, const Vector3& v)
+{
+	Vector3 u_ = u;
+	Vector3 v_ = v;
+	u_.normalize();
+	v_.normalize();
+
+	float dot = u_.dot(v_);
+
+	Vector3 cross = u_.cross(v_);
+
+	Vector3 axis = cross.normalize();
+
+	float theta = acosf(dot);
+
+	return MakeAxisAngle(axis,theta);
 }
 
 Quaternion Quaternion::operator-() const

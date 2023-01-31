@@ -28,6 +28,7 @@ public:
 	float Dot(const Quaternion q1, const Quaternion& q2);
 	Quaternion Slerp(const Quaternion& q0, const Quaternion& q1,float t);
 
+	Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
 
 	Quaternion operator-()const;
 	Quaternion& operator+=(const Quaternion& q);
