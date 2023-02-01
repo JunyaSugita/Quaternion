@@ -92,3 +92,25 @@ const Vector3 operator/(const Vector3& v, float s) {
 	Vector3 temp(v);
 	return v / s;
 }
+
+Vector3 Normalize(Vector3 v)
+{
+	Vector3 ans;
+	ans = v.normalize();
+
+	return ans;
+}
+
+float Dot(Vector3 a, Vector3 b)
+{
+	float ans;
+
+	ans = a.x * b.x + a.y * b.y + a.z * b.z;
+
+	return ans;
+}
+
+Vector3 Cross(Vector3 a, Vector3 b)
+{
+	return { (a.y * b.z) - (a.z * b.y), (a.z * b.x) - (a.x * b.z), (a.x * b.y) - (a.y - b.x) };
+}

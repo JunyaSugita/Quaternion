@@ -75,7 +75,7 @@ Quaternion Quaternion::MakeAxisAngle(const Vector3& axis, float angle)
 	q.x = vec.x * sinf(angle / 2);
 	q.y = vec.y * sinf(angle / 2);
 	q.z = vec.z * sinf(angle / 2);
-	q.w = cos(angle / 2);
+	q.w = cosf(angle / 2);
 
 	return q;
 }
@@ -149,7 +149,7 @@ Quaternion Quaternion::DirectionToDirection(const Vector3& u, const Vector3& v)
 
 	float dot = u_.dot(v_);
 
-	Vector3 cross = u_.cross(v_);
+	Vector3 cross = Cross(u_,v_);
 
 	Vector3 axis = cross.normalize();
 
